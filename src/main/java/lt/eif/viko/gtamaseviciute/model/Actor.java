@@ -1,15 +1,31 @@
 package lt.eif.viko.gtamaseviciute.model;
 
-public class Actor {
-    private int id;
-    private String name;
-    private int birthYear;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
-    public int getId() {
+import java.util.List;
+
+@Entity
+@Table(name = "actors")
+public class Actor {
+    @Id
+    private Long id;
+
+    private String name;
+    private int birth_year;
+
+    @ManyToMany(mappedBy = "actors")
+    @JsonBackReference
+    private List<Movie> movies;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -21,11 +37,19 @@ public class Actor {
         this.name = name;
     }
 
-    public int getBirthYear() {
-        return birthYear;
+    public int getBirth_year() {
+        return birth_year;
     }
 
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
+    public void setBirth_year(int birth_year) {
+        this.birth_year = birth_year;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 }

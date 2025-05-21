@@ -1,45 +1,44 @@
 package lt.eif.viko.gtamaseviciute.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "movies")
 public class Movie {
-    private int id;
+    @Id
+    private Long id;
+
     private String title;
-    private int releaseYear;
+    private int release_year;
     private String genre;
     private float rating;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actors",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    @JsonManagedReference
     private List<Actor> actors;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public List<Actor> getActors() {
+        return actors;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
     }
 
     public float getRating() {
@@ -50,11 +49,27 @@ public class Movie {
         this.rating = rating;
     }
 
-    public List<Actor> getActors() {
-        return actors;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setActors(List<Actor> actors) {
-        this.actors = actors;
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getRelease_year() {
+        return release_year;
+    }
+
+    public void setRelease_year(int release_year) {
+        this.release_year = release_year;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
